@@ -1,0 +1,18 @@
+{% extends "thought/main_layout.html" %}
+
+{% block title %}Thoughts{% endblock %}
+
+{% block content %}
+    <h1>Thoughts</h1>
+
+    <a href="{% url post %}">Post</a>
+
+    {% for thought in thoughts %}
+        <div class="thought">
+            <div class="text"> {{ thought.text|striptags }} </div>
+            <div class="date"> {{ thought.date|date:"d F Y" }} </div>
+            <a href="{% url remove thought.id %}">Remove</a>
+            <a href="{% url edit thought.id %}">Edit</a>
+        </div>
+    {% endfor %}
+{% endblock %}

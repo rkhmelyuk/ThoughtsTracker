@@ -1,0 +1,17 @@
+{% extends "thought/main_layout.html" %}
+
+{% block title %}Edit a Thought{% endblock %}
+
+{% block content %}
+    <h1>Edit a Thought</h1>
+
+    <form action="{% url edit thought.id %}" method="POST">
+        {% csrf_token %}
+        <p><label for="text">Thought:</label></p>
+        <textarea rows="" cols="" style="width: 500px; height: 150px;" name="text" id="text">{{ thought.text|striptags }}</textarea>
+        <br/>
+        <a href="{% url index %}">Cancel</a>
+        {# <a href="javascript:void(0);" onclick="">Post</a> #}
+        <input type="submit" value="Save"/>
+    </form>
+{% endblock %}
