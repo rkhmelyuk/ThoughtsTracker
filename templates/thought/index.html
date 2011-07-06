@@ -7,12 +7,19 @@
 
     <a href="{% url post %}">Post</a>
 
+    <div id="thoughtsList">
     {% for thought in thoughts %}
         <div class="thought">
             <div class="text"> {{ thought.text|striptags }} </div>
-            <div class="date"> {{ thought.date|date:"d F Y" }} </div>
-            <a href="{% url remove thought.id %}">Remove</a>
-            <a href="{% url edit thought.id %}">Edit</a>
+            <div>
+                <div class="date"> {{ thought.date|date:"d F Y" }} </div>
+                <div class="buttons">
+                    <a href="{% url remove thought.id %}" class="remove">Remove</a>
+                    <a href="{% url edit thought.id %}">Edit</a>
+                </div>
+            </div>
+            <div class="clear"></div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}

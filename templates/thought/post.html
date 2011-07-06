@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Post a Thought</h1>
 
-    <form action="{% url post %}" method="POST">
+    <form id="postForm" action="{% url post %}" method="POST">
         {% csrf_token %}
         <p><label for="text">Thought:</label></p>
         <textarea rows="" cols="" style="width: 500px; height: 150px;" name="text" id="text"></textarea>
@@ -13,7 +13,6 @@
         <p><label for="tags">Tags:</label></p>
         <input type="text" id="tags" name="tags" value=""/>
         <a href="{% url index %}">Cancel</a>
-        {# <a href="javascript:void(0);" onclick="">Post</a> #}
-        <input type="submit" value="Post"/>
+        <a href="javascript:void(0);" onclick="$('#postForm').submit()">Post</a>
     </form>
 {% endblock %}

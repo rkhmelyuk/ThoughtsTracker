@@ -3,8 +3,12 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>{% block title %} My Thoughts{% endblock %}</title>
-    <link href="{% get_static_prefix %}css/styles.css"/>
+    <title>{% block title %}My Thoughts{% endblock %}</title>
+    <meta name="author" content="Ruslan Khmelyuk">
+
+    <link  rel="stylesheet" href="{% get_static_prefix %}css/styles.css"/>
+
+    <script type="text/javascript" src="{% get_static_prefix %}js/jquery.js"></script>
 </head>
 <body>
     {% block content %}{% endblock %}

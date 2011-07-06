@@ -1,5 +1,29 @@
+* { margin: 0; padding: 0; }
 
 body {
-    font-size: 12px;
-    font-family: Arial Verdana sans-serif;
+    font: 13px arial,freesans,clean,sans-serif;
+    margin-left: 20%;
+    margin-right: 20%;
 }
+
+p { margin: 5px 0; }
+
+.clear { clear: both; }
+
+a { color: #003399; margin: 0; border: none; cursor: pointer; outline: none; }
+a:hover, a.selected { color: #2255bb; }
+
+a.remove { color: #ff0000; font-size: 0.95em;}
+
+#thoughtsList .thought {
+    margin: 10px 0; padding: 10px 5px; border: 1px solid #efefef;
+    -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+#thoughtsList .thought:hover { border: 1px solid #e0e0e0; background-color: #f5f5f5;}
+#thoughtsList .thought .text { font-size: 1.2em; padding: 4px 0; }
+#thoughtsList .thought .date { color:  #afafaf; font-size: 0.9em; }
+
+#thoughtsList .thought .date { float: left; }
+#thoughtsList .thought .buttons { float: right; }
+
+.buttons { text-align: right; }
+.buttons a { margin: 3px 5px; }
