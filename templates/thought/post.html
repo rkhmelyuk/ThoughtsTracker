@@ -8,11 +8,14 @@
     <form id="postForm" action="{% url post %}" method="POST">
         {% csrf_token %}
         <p><label for="text">Thought:</label></p>
-        <textarea rows="" cols="" style="width: 500px; height: 150px;" name="text" id="text"></textarea>
+        <textarea rows="" cols="" name="text" id="text"></textarea>
         <br/>
         <p><label for="tags">Tags:</label></p>
         <input type="text" id="tags" name="tags" value=""/>
-        <a href="{% url index %}">Cancel</a>
-        <a href="javascript:void(0);" onclick="$('#postForm').submit()">Post</a>
+        
+        <div class="buttons">
+            <a href="{% url index %}">Cancel</a>
+            <a href="javascript:void(0);" onclick="$('#postForm').submit()">Post</a>
+        </div>
     </form>
 {% endblock %}

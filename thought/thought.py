@@ -1,5 +1,6 @@
 from bson.objectid import ObjectId
 from pymongo.errors import OperationFailure
+from pymongo import DESCENDING
 
 __author__ = 'ruslan'
 
@@ -61,7 +62,7 @@ class ThoughtDao:
         return Thought(found['_id'], found['text'], found['date'])
 
     def latest(self, num):
-        cursor = self.db.thoughts.find().limit(num)
+        cursor = self.db.thoughts.find().sort("date", DESCENDING).limit(num)
         latestThoughts = []
         for doc in cursor:
             thought = Thought(doc.get("_id"), doc.get("text"), doc.get("date"))
