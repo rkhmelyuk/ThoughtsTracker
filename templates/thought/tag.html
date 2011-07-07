@@ -1,11 +1,11 @@
 {% extends "thought/main_layout.html" %}
 
-{% block title %}Thoughts{% endblock %}
+{% block title %}{{ tag }} thoughts{% endblock %}
 
 {% block content %}
-    <h1>Thoughts</h1>
+    <h1>{{ tag }} thoughts</h1>
 
-    <a href="{% url post %}">Post</a>
+    <a href="{% url index %}">Back</a>
 
     <div id="thoughtsList">
     {% for thought in thoughts %}

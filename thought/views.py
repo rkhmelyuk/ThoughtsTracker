@@ -13,6 +13,7 @@ def post(request):
     if request.method == 'POST':
         thought.text = request.POST.get('text')
         thought.date = datetime.now()
+        thought.tags = getTagsList(request.POST.get('tags'))
         ThoughtDao().create(thought)
 
         return HttpResponseRedirect(reverse('index'))
@@ -25,13 +26,21 @@ def edit(request, id):
     if request.method == 'POST':
         thought.text = request.POST.get('text')
         thought.date = datetime.now()
+        thought.tags = getTagsList(request.POST.get('tags'))
         ThoughtDao().save(thought)
 
         return HttpResponseRedirect(reverse('index'))
 
-    return render_to_response("thought/edit.html", {'thought': thought})
+    tags = (thought.get_tags() and ", ".join(thought.get_tags()) or "")
+    return render_to_response("thought/edit.html", {'thought': thought, 'tags': tags})
 
 def remove(request, id):
     ThoughtDao().deleteById(id)
     return HttpResponseRedirect(reverse('index'))
-  
+
+def tag(request, tag):
+    thoughts = ThoughtDao().searchByTag(tag, 10)
+    return render_to_response("thought/tag.html", {'thoughts': thoughts})
+
+def getTagsList(tagsText):
+    return [tag.strip() for tag in tagsText.split(",")]

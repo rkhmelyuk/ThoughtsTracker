@@ -10,6 +10,7 @@ urlpatterns = patterns('thought.views',
     url(r'^post/$', 'post', name = 'post'),
     url(r'^edit/(?P<id>\w+)$', 'edit', name = 'edit'),
     url(r'^remove/(?P<id>\w+)$', 'remove', name = 'remove'),
+    url(r'^tag/(?P<tag>\w+)$', 'tag', name = 'tag'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
