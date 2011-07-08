@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.shortcuts import HttpResponseRedirect
@@ -46,9 +45,13 @@ def remove(request, id):
 
 
 def tag(request, tag):
+    tags = TagManager().getTags()
     thoughts = ThoughtManager().searchByTag(tag, 10)
-    return render_to_response("thought/tag.html", {"tag": tag, 'thoughts': thoughts})
+    return render_to_response("thought/tag.html", {"tag": tag, 'thoughts': thoughts, 'tags': tags})
 
 
 def getTagsList(tagsText):
-    return [tag.strip().lower() for tag in tagsText.split(",")]
+    tags = [tag.strip().lower() for tag in tagsText.split(",")]
+    tags.sort()
+
+    return tags

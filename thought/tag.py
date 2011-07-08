@@ -1,5 +1,6 @@
 
 from pymongo import Connection
+from pymongo import ASCENDING
 
 class Tag:
     """
@@ -24,13 +25,14 @@ class TagManager:
 
     def pushTags(self, tags):
         """ Increment tags usage count """
-        [self._incrementTagUsageCount(tag) for tag in tags]
+        if tags: [self._incrementTagUsageCount(tag) for tag in tags]
 
 
     def removeTags(self, tags):
         """ Decrement tags usage count """
-        [self._decrementTagUsageCount(tag) for tag in tags]
-        self._removeNotUsedTags()
+        if tags:
+            [self._decrementTagUsageCount(tag) for tag in tags]
+            self._removeNotUsedTags()
 
     def _incrementTagUsageCount(self, tag):
         self.db.tags.update({"_id": tag}, {"$inc": {"count": 1}}, True)
@@ -39,13 +41,11 @@ class TagManager:
         self.db.tags.update({"_id": tag}, {"$inc": {"count": -1}}, True)
 
     def _removeNotUsedTags(self):
-        """
-        Remove tags with usage count <= 0
-        """
+        """ Remove tags with usage count <= 0 """
         self.db.tags.remove({"count": {"$lte": 0}})
 
     def getTags(self):
-        cursor = self.db.tags.find()
+        cursor = self.db.tags.find().sort("_id", ASCENDING)
         return [self._readTag(doc) for doc in cursor]
 
     def _readTag(self, found):

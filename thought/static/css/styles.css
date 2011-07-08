@@ -18,6 +18,11 @@ a:hover, a.selected { color: #2255bb; }
 
 a.remove { color: #ff0000; font-size: 0.95em;}
 
+#tagsList { float: left; width: 200px; padding: 4px 10px 0 0; }
+#thoughtsList { float: left; width: 600px; padding: 4px 0 0 ; }
+
+#tagsList .tag:hover { font-size: 1.2em ;}
+
 #thoughtsList .thought {
     margin: 5px 0; padding: 8px 5px; border: 1px solid #efefef;
     -moz-border-radius: 3px; -webkit-border-radius: 3px; }

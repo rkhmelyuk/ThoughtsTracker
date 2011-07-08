@@ -77,7 +77,7 @@ class ThoughtManager:
             thought = self.get(id)
             if thought is not None:
                 self.db.thoughts.remove(ObjectId(id), safe=True)
-                self.tagManager.removeTags(thought)
+                self.tagManager.removeTags(thought.get_tags())
                 return True
         except OperationFailure:
             print "Error to remove thought by id " + id
@@ -86,7 +86,7 @@ class ThoughtManager:
 
     def get(self, id):
         found = self.db.thoughts.find_one({"_id": ObjectId(id)})
-        return self._readThought(found)
+        return found and self._readThought(found) or None
 
     def latest(self, limit):
         cursor = self.db.thoughts.find().sort("date", DESCENDING).limit(limit)

@@ -7,6 +7,13 @@
 
     <a href="{% url index %}">Back</a>
 
+    <div id="tagsList">
+        <h3>Tags</h3>
+        {% for tag in tags %}
+            <a href="{% url tag tag.name %}" class="tag">{{ tag.name }} ({{ tag.count }})</a>
+        {% endfor %}
+    </div>
+
     <div id="thoughtsList">
     {% for thought in thoughts %}
         <div class="thought">
@@ -29,4 +36,6 @@
         </div>
     {% endfor %}
     </div>
+
+    <div class="clear"></div>
 {% endblock %}
