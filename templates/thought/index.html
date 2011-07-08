@@ -7,6 +7,12 @@
 
     <a href="{% url post %}">Post</a>
 
+    <div id="tagsList">
+        {% for tag in tags %}
+            <a href="{% url tag tag.name %}">{{ tag.name }} ({{ tag.count }})</a>
+        {% endfor %}
+    </div>
+
     <div id="thoughtsList">
     {% for thought in thoughts %}
         <div class="thought">

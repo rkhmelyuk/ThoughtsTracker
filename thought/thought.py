@@ -3,6 +3,7 @@ from datetime import datetime
 from pymongo.errors import OperationFailure
 from pymongo import DESCENDING
 from pymongo import Connection
+from tag import *
 
 class Thought:
     def __init__(self, id=None, text=None, date=None, tags=None):
@@ -31,22 +32,12 @@ class Thought:
 
     def set_tags(self, tags):
         self.tags = tags
+        
 
-class TagDao:
-    def __init__(self):
-        self.db = Connection().tags
-
-    def pushTags(self, tags):
-        pass
-
-    def removeTags(self, tags):
-        pass
-
-class ThoughtDao:
-
+class ThoughtManager:
     def __init__(self):
         self.db = Connection().thoughts
-        self.tagDao = TagDao()
+        self.tagManager = TagManager()
 
     def create(self, thought):
         id = self.db.thoughts.insert({
@@ -54,45 +45,59 @@ class ThoughtDao:
             "date": thought.get_date(),
             "tags": thought.get_tags()
         })
-        
+
         thought.set_id(id)
-        self.tagDao.pushTags(thought.get_tags())
+        self.tagManager.pushTags(thought.get_tags())
 
     def save(self, thought):
+        existing_thought = self.get(thought.get_id())
+        if existing_thought and existing_thought.get_tags():
+            thoughtTagsSet = set(thought.get_tags())
+            existingThoughtTagsSet = set(existing_thought.get_tags())
+
+            addTags = thoughtTagsSet - existingThoughtTagsSet
+            removeTags = existingThoughtTagsSet - thoughtTagsSet
+        else:
+            addTags = thought.get_tags()
+            removeTags = None
+
         self.db.thoughts.update({"_id": thought.get_id()}, {
             "$set": {
                 "text": thought.get_text(),
                 "date": thought.get_date(),
                 "tags": thought.get_tags()
             }
-        }, upsert = True)
+        }, upsert=True)
 
-        self.tagDao.pushTags(thought.get_tags())
+        addTags and self.tagManager.pushTags(addTags)
+        removeTags and self.tagManager.removeTags(removeTags)
 
     def deleteById(self, id):
         try:
             thought = self.get(id)
             if thought is not None:
                 self.db.thoughts.remove(ObjectId(id), safe=True)
-                self.tagDao.removeTags(thought)
+                self.tagManager.removeTags(thought)
                 return True
         except OperationFailure:
             print "Error to remove thought by id " + id
-        return False
 
-    def readThought(self, found):
-        return Thought(
-            found.get('_id'), found.get('text'),
-            found.get('date'), found.get('tags'))
+        return False
 
     def get(self, id):
         found = self.db.thoughts.find_one({"_id": ObjectId(id)})
-        return self.readThought(found)
+        return self._readThought(found)
 
     def latest(self, limit):
         cursor = self.db.thoughts.find().sort("date", DESCENDING).limit(limit)
-        return [self.readThought(doc) for doc in cursor]
+        return [self._readThought(doc) for doc in cursor]
 
     def searchByTag(self, tag, limit):
-        cursor = self.db.thoughts.find({"tags": tag}).sort("date", DESCENDING).limit(limit)
-        return [self.readThought(doc) for doc in cursor]
+        cursor = self.db.thoughts.find({"tags": tag})
+        cursor = cursor.sort("date", DESCENDING).limit(limit)
+        return [self._readThought(doc) for doc in cursor]
+
+    def _readThought(self, found):
+        return Thought(
+            found.get('_id'), found.get('text'),
+            found.get('date'), found.get('tags'))
