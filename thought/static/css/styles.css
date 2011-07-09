@@ -1,27 +1,22 @@
 * { margin: 0; padding: 0; }
 
-body {
-    font: 13px arial,freesans,clean,sans-serif;
-    margin-left: 20%;
-    margin-right: 20%;
-}
+body { font: 13px arial,freesans,clean,sans-serif; }
 
 p { margin: 5px 0; }
 
 .clear { clear: both; }
+div#contentWrapper { width: 800px;  margin: 0 auto -50px auto; }
 
 input[type="text"], textarea { border: 1px solid #efefef; padding: 5px; font-family: arial; }
 input[type="text"]:hover, textarea:hover { border: 1px solid #d0d0d0; }
 
-a { color: #003399; margin: 0; border: none; cursor: pointer; outline: none; }
-a:hover, a.selected { color: #2255bb; }
+a { color: #003399; margin: 0; border: none; cursor: pointer; outline: none; text-decoration: none; text-shadow: #e0e0e0 0px 1px; }
+a:hover, a.selected { color: #2255bb; text-decoration: underline; }
 
 a.remove { color: #ff0000; font-size: 0.95em;}
 
 #tagsList { float: left; width: 200px; padding: 4px 10px 0 0; }
-#thoughtsList { float: left; width: 600px; padding: 4px 0 0 ; }
-
-#tagsList .tag:hover { font-size: 1.2em ;}
+#thoughtsList { float: left; width: 590px; padding: 4px 0 0 ; }
 
 #thoughtsList .thought {
     margin: 5px 0; padding: 8px 5px; border: 1px solid #efefef;
@@ -30,9 +25,8 @@ a.remove { color: #ff0000; font-size: 0.95em;}
 
 #thoughtsList .thought .text { font-size: 1.2em; padding: 4px 0; }
 #thoughtsList .thought .tags { padding: 4px 0; }
-#thoughtsList .thought .date { color:  #afafaf; font-size: 0.9em; }
-
-#thoughtsList .thought .date { float: left; height: 18px; }
+#thoughtsList .thought .date { float: left; height: 18px; font-size: 0.9em; }
+#thoughtsList .thought .date a { color: #777777;}
 #thoughtsList .thought .buttons { float: right; display: none; height: 18px; }
 #thoughtsList .thought:hover .buttons { display: inline; }
 
@@ -43,6 +37,8 @@ a.remove { color: #ff0000; font-size: 0.95em;}
 #saveForm #text { width: 100%; height: 100px; font-size: 15px; }
 #saveForm #tags { width: 100%; }
 #saveForm .buttons { padding: 5px 0; }
+
+#thoughtText { font-size: 24px; font-family: serif; text-shadow: #e0e0e0 1px 1px; }
 
 
 .buttons { text-align: right; }

@@ -1,8 +1,8 @@
 from bson.objectid import ObjectId
 from datetime import datetime
+from django.db.models import permalink
 from pymongo.errors import OperationFailure
 from pymongo import DESCENDING
-from pymongo import Connection
 from tag import *
 
 class Thought:
@@ -32,6 +32,10 @@ class Thought:
 
     def set_tags(self, tags):
         self.tags = tags
+
+    @permalink
+    def get_absolute_url(self):
+        return "thought", None, {'id': str(self.id)}
         
 
 class ThoughtManager:

@@ -1,0 +1,10 @@
+{% extends "thought/main_layout.html" %}
+
+{% block title %}Post a Thought{% endblock %}
+
+{% block content %}
+
+    <div id="thoughtText">
+        {{ thought.text|striptags|linebreaksbr }}
+    </div>
+{% endblock %}

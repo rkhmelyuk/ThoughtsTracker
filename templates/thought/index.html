@@ -17,26 +17,29 @@
     </div>
 
     <div id="thoughtsList">
-    {% for thought in thoughts %}
-        <div class="thought">
-            <div class="text"> {{ thought.text|striptags }} </div>
-            {% if thought.tags %}
-            <div class="tags">
-                {% for tag in thought.tags %}
-                    <a href="{% url tag tag%}">{{ tag }}</a>
-                {% endfor %}
-            </div>
-            {% endif %}
-            <div>
-                <div class="date"> {{ thought.date|date:"d F Y, G:i" }} </div>
-                <div class="buttons">
-                    <a href="{% url remove thought.id %}" class="remove">Remove</a>
-                    <a href="{% url edit thought.id %}">Change</a>
+        {% for thought in thoughts %}
+            <div class="thought">
+                <div class="text"> {{ thought.text|striptags|linebreaksbr }} </div>
+                {% if thought.tags %}
+                    <div class="tags">
+                        <strong>Tags:</strong>
+                        {% for tag in thought.tags %}
+                            <a href="{% url tag tag%}">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div>
+                    <div class="date">
+                        <a href="{{ thought.get_absolute_url }}">{{ thought.date|date:"d F Y, G:i" }}</a>
+                    </div>
+                    <div class="buttons">
+                        <a href="{% url remove thought.id %}" class="remove">Remove</a>
+                        <a href="{% url edit thought.id %}">Change</a>
+                    </div>
                 </div>
+                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
-        </div>
-    {% endfor %}
+        {% endfor %}
     </div>
 
     <div class="clear"></div>

@@ -39,6 +39,11 @@ def edit(request, id):
     return render_to_response("thought/edit.html", {'thought': thought, 'tags': tags})
 
 
+def thought(request, id):
+    thought = ThoughtManager().get(id)
+    return render_to_response("thought/thought.html", {'thought': thought})
+
+
 def remove(request, id):
     ThoughtManager().deleteById(id)
     return HttpResponseRedirect(reverse('index'))
