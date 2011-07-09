@@ -2,41 +2,22 @@
 
 {% block title %}{{ tag }} thoughts{% endblock %}
 
+{% block head %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Thoughts.loadThoughtsPage("#loadMore");
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
-    <h1>{{ tag }} thoughts</h1>
+    <h1>thoughts on {{ tag }}</h1>
 
     <a href="{% url index %}">Back</a>
+    <div class="clear"></div>
 
-    <div id="tagsList">
-        <h3>Tags</h3>
-        {% for tag in tags %}
-            <a href="{% url tag tag.name %}" class="tag">{{ tag.name }} ({{ tag.count }})</a>
-        {% endfor %}
-    </div>
-
-    <div id="thoughtsList">
-    {% for thought in thoughts %}
-        <div class="thought">
-            <div class="text"> {{ thought.text|striptags|linebreaksbr }} </div>
-            {% if thought.tags %}
-            <div class="tags">
-                <strong>Tags:</strong>
-                {% for tag in thought.tags %}
-                    <a href="{% url tag tag%}">{{ tag }}</a>
-                {% endfor %}
-            </div>
-            {% endif %}
-            <div>
-                <div class="date"> <a href="{{ thought.get_absolute_url }}">{{ thought.date|date:"d F Y, G:i" }}</a> </div>
-                <div class="buttons">
-                    <a href="{% url remove thought.id %}" class="remove">Remove</a>
-                    <a href="{% url edit thought.id %}">Change</a>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
-    {% endfor %}
-    </div>
+    {% include "thought/tags_list.html" %}
+    {% include "thought/thoughts_page.html" %}
 
     <div class="clear"></div>
 {% endblock %}

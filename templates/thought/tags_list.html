@@ -1,0 +1,6 @@
+<div id="tagsList">
+    <h3>Tags</h3>
+    {% for tag in tags %}
+        <a href="{% url tag tag.name %}" class="tag">{{ tag.name }} ({{ tag.count }})</a>
+    {% endfor %}
+</div>

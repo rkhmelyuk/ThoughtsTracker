@@ -12,6 +12,8 @@ urlpatterns = patterns('thought.views',
     url(r'^remove/(?P<id>\w+)$', 'remove', name = 'remove'),
     url(r'^thought/(?P<id>\w+)$', 'thought', name = 'thought'),
     url(r'^tag/(?P<tag>\w+)$', 'tag', name = 'tag'),
+    url(r'^_internal/latestThoughtsPage/(?P<page>\d+)$', 'latestPage', name = 'latestPage'),
+    url(r'^_internal/tagThoughtsPage/(?P<tag>\w+)/(?P<page>\d+)$', 'tagPage', name = 'tagPage'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

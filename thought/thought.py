@@ -92,13 +92,13 @@ class ThoughtManager:
         found = self.db.thoughts.find_one({"_id": ObjectId(id)})
         return found and self._readThought(found) or None
 
-    def latest(self, limit):
-        cursor = self.db.thoughts.find().sort("date", DESCENDING).limit(limit)
+    def latest(self, limit, skip = 0):
+        cursor = self.db.thoughts.find().sort("date", DESCENDING).skip(skip).limit(limit)
         return [self._readThought(doc) for doc in cursor]
 
-    def searchByTag(self, tag, limit):
+    def searchByTag(self, tag, limit, skip = 0):
         cursor = self.db.thoughts.find({"tags": tag})
-        cursor = cursor.sort("date", DESCENDING).limit(limit)
+        cursor = cursor.sort("date", DESCENDING).skip(skip).limit(limit)
         return [self._readThought(doc) for doc in cursor]
 
     def _readThought(self, found):

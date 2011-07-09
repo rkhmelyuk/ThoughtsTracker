@@ -4,11 +4,29 @@ from django.shortcuts import HttpResponseRedirect
 from thought import *
 from tag import *
 
+THOUGHTS_PER_PAGE = 10
+
 def index(request):
     tags = TagManager().getTags()
-    thoughts = ThoughtManager().latest(10)
+    thoughts = ThoughtManager().latest(THOUGHTS_PER_PAGE)
+    showMore = len(thoughts) == THOUGHTS_PER_PAGE
+    loadMoreUrl = reverse("latestPage", args=[1])
+
     return render_to_response("thought/index.html",
-            {'thoughts': thoughts, 'tags': tags})
+            {'thoughts': thoughts, 'tags': tags,
+             'showMore': showMore, 'loadMoreUrl': loadMoreUrl})
+
+
+def latestPage(request, page):
+    page = int(page)
+    thoughts = ThoughtManager().latest(
+        THOUGHTS_PER_PAGE, skip=page * THOUGHTS_PER_PAGE)
+    showMore = len(thoughts) == THOUGHTS_PER_PAGE
+    loadMoreUrl = reverse("latestPage", args=[page + 1])
+
+    return render_to_response("thought/thoughts_page.html",
+            {'thoughts': thoughts, "showMore": showMore,
+             'loadMoreUrl': loadMoreUrl})
 
 
 def post(request):
@@ -51,8 +69,25 @@ def remove(request, id):
 
 def tag(request, tag):
     tags = TagManager().getTags()
-    thoughts = ThoughtManager().searchByTag(tag, 10)
-    return render_to_response("thought/tag.html", {"tag": tag, 'thoughts': thoughts, 'tags': tags})
+    thoughts = ThoughtManager().searchByTag(tag, THOUGHTS_PER_PAGE)
+    showMore = len(thoughts) == THOUGHTS_PER_PAGE
+    loadMoreUrl = reverse("tagPage", args=[tag, 1])
+
+    return render_to_response("thought/tag.html", {
+        "tag": tag, 'thoughts': thoughts, 'tags': tags,
+        'showMore': showMore, 'loadMoreUrl': loadMoreUrl})
+
+
+def tagPage(request, tag, page):
+    page = int(page)
+    thoughts = ThoughtManager().searchByTag(
+        tag, THOUGHTS_PER_PAGE, skip=page * THOUGHTS_PER_PAGE)
+
+    showMore = len(thoughts) == THOUGHTS_PER_PAGE
+    loadMoreUrl = reverse("tagPage", args=[tag, page + 1])
+
+    return render_to_response("thought/thoughts_page.html", {
+        'thoughts': thoughts, 'showMore': showMore, 'loadMoreUrl': loadMoreUrl})
 
 
 def getTagsList(tagsText):
