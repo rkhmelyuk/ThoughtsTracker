@@ -15,13 +15,20 @@ a:hover, a.selected { color: #2255bb; text-decoration: underline; }
 
 a.remove { color: #ff0000; font-size: 0.95em;}
 
-#tagsList { float: left; width: 200px; padding: 4px 10px 0 0; }
-#thoughtsList { float: left; width: 590px; padding: 4px 0 0 ; }
+#tagsList {
+    float: left; width: 190px; margin: 10px 5px 0 0; padding: 4px 5px;
+    text-align: justify; border: 1px solid transparent;}
+#tagsList:hover { border: 1px solid #e0e0e0; box-shadow: 0 1px 10px #afafaf; }
 
+#tagsList .tag { line-height: 18px; padding: 4px 0;}
+
+#thoughtsList { float: left; width: 590px; padding: 4px 0 0 ; }
 #thoughtsList .thought {
     margin: 5px 0; padding: 8px 5px; border: 1px solid #efefef;
     -moz-border-radius: 3px; -webkit-border-radius: 3px; }
-#thoughtsList .thought:hover { border: 1px solid #e0e0e0; box-shadow: 0 1px 10px #afafaf;}
+#thoughtsList .thought:hover {
+    -moz-border-radius: 3px; -webkit-border-radius: 3px;
+    border: 1px solid #e0e0e0; box-shadow: 0 1px 10px #afafaf;}
 
 #thoughtsList .thought .text { font-size: 1.2em; padding: 4px 0; }
 #thoughtsList .thought .tags { padding: 4px 0; }

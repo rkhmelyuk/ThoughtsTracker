@@ -143,3 +143,7 @@ LOGGING = {
         },
     }
 }
+
+# -------------------------------------------- Project settings
+
+THOUGHTS_PER_PAGE = 10

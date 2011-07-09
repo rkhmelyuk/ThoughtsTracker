@@ -1,19 +1,20 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.shortcuts import HttpResponseRedirect
+from settings import THOUGHTS_PER_PAGE
 from thought import *
 from tag import *
 
-THOUGHTS_PER_PAGE = 10
 
 def index(request):
     tags = TagManager().getTags()
+    tagMax = tags and max([tag.count for tag in tags]) or 0
     thoughts = ThoughtManager().latest(THOUGHTS_PER_PAGE)
     showMore = len(thoughts) == THOUGHTS_PER_PAGE
     loadMoreUrl = reverse("latestPage", args=[1])
 
     return render_to_response("thought/index.html",
-            {'thoughts': thoughts, 'tags': tags,
+            {'thoughts': thoughts, 'tags': tags, 'tagMax': tagMax,
              'showMore': showMore, 'loadMoreUrl': loadMoreUrl})
 
 
@@ -69,13 +70,15 @@ def remove(request, id):
 
 def tag(request, tag):
     tags = TagManager().getTags()
+    tagMax = tags and max([each.count for each in tags]) or 0
     thoughts = ThoughtManager().searchByTag(tag, THOUGHTS_PER_PAGE)
     showMore = len(thoughts) == THOUGHTS_PER_PAGE
     loadMoreUrl = reverse("tagPage", args=[tag, 1])
 
     return render_to_response("thought/tag.html", {
         "tag": tag, 'thoughts': thoughts, 'tags': tags,
-        'showMore': showMore, 'loadMoreUrl': loadMoreUrl})
+        'tagMax': tagMax, 'showMore': showMore,
+        'loadMoreUrl': loadMoreUrl})
 
 
 def tagPage(request, tag, page):
