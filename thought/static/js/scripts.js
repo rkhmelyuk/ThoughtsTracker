@@ -1,5 +1,10 @@
 var Thoughts = {
 
+    editThought: function() {
+        $('textarea').autoResize();
+        $('textarea').focus();
+    },
+
     loadThoughtsPage: function(button) {
         $(button).live('click', function() {
             var path = $(this).attr('rel');

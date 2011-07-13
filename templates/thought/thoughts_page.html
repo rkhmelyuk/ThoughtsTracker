@@ -1,7 +1,8 @@
+{% load markup %}
 <div id="thoughtsList">
     {% for thought in thoughts %}
         <div class="thought {% if forloop.first %}first{% endif %}">
-            <div class="text"> {{ thought.text|striptags|linebreaksbr }} </div>
+            <div class="text markup"> {{ thought.text|striptags|markdown }} </div>
             {% if thought.tags %}
                 <div class="tags">
                     <strong>Tags:</strong>

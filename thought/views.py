@@ -7,6 +7,7 @@ from django.conf import settings
 from thought import *
 from tag import *
 
+
 def index(request):
     tags = TagManager().getTags()
     tagMax = tags and max([tag.count for tag in tags]) or 0
@@ -104,9 +105,21 @@ def tagPage(request, tag, page):
     })
 
 
-def getTagsList(tagsText):
+def removeEmptyTag(tags):
+    try:
+        tags.remove("")
+    except ValueError:
+        pass
+
+
+def parseTags(tagsText):
     tags = [tag.strip().lower() for tag in tagsText.split(",")]
-    tags.remove("")
+    return tags
+
+
+def getTagsList(tagsText):
+    tags = parseTags(tagsText)
+    removeEmptyTag(tags)
     tags.sort()
 
     return tags

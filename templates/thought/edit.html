@@ -2,6 +2,13 @@
 
 {% block title %}Edit a Thought{% endblock %}
 
+{% block head %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Thoughts.editThought() });
+    </script>
+{% endblock %}
+
 {% block content %}
     <h1>Edit a Thought</h1>
 

@@ -45,7 +45,7 @@ class ThoughtManager:
 
     def create(self, thought):
         id = self.db.thoughts.insert({
-            "text": thought.get_text(),
+            "text": thought.get_text().strip(),
             "date": thought.get_date(),
             "tags": thought.get_tags()
         })
@@ -67,7 +67,7 @@ class ThoughtManager:
 
         self.db.thoughts.update({"_id": thought.get_id()}, {
             "$set": {
-                "text": thought.get_text(),
+                "text": thought.get_text().strip(),
                 "date": thought.get_date(),
                 "tags": thought.get_tags()
             }

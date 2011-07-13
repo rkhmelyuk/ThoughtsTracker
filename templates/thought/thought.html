@@ -2,9 +2,9 @@
 
 {% block title %}Post a Thought{% endblock %}
 
+{% load markup %}
 {% block content %}
-
-    <div id="thoughtText">
-        {{ thought.text|striptags|linebreaksbr }}
+    <div id="thoughtText" class="markup">
+        {{ thought.text|striptags|markdown }}
     </div>
 {% endblock %}
