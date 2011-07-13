@@ -16,8 +16,8 @@ a:hover, a.selected { color: #2255bb; text-decoration: underline; }
 
 a.remove { color: #ff0000; font-size: 0.95em;}
 
-h1 { padding: 15px 0 20px; font-size: 34px; color: #2f2f2f; text-shadow: #d0d0d0 2px 2px 4px; }
-h1, h2, h3, h4, h5, h6 { color: #2f2f2f; text-shadow: #d0d0d0 1px 2px 4px; }
+h1 { padding: 15px 0 20px; font-size: 34px; color: #2f2f2f; text-shadow: #d0d0d0 1px 1px 3px; }
+h2, h3, h4, h5, h6 { color: #2f2f2f; text-shadow: #d0d0d0 1px 1px; }
 
 #tagsList {
     float: left; width: 190px; margin: 10px 5px 0 0; padding: 4px 5px;
