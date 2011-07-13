@@ -25,13 +25,13 @@ class TagManager:
 
     def pushTags(self, tags):
         """ Increment tags usage count """
-        if tags: [self._incrementTagUsageCount(tag) for tag in tags]
+        if tags: [self._incrementTagUsageCount(tag) for tag in tags if tag]
 
 
     def removeTags(self, tags):
         """ Decrement tags usage count """
         if tags:
-            [self._decrementTagUsageCount(tag) for tag in tags]
+            [self._decrementTagUsageCount(tag) for tag in tags if tag]
             self._removeNotUsedTags()
 
     def _incrementTagUsageCount(self, tag):

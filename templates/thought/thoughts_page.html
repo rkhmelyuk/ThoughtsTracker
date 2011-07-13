@@ -1,6 +1,6 @@
 <div id="thoughtsList">
     {% for thought in thoughts %}
-        <div class="thought">
+        <div class="thought {% if forloop.first %}first{% endif %}">
             <div class="text"> {{ thought.text|striptags|linebreaksbr }} </div>
             {% if thought.tags %}
                 <div class="tags">
