@@ -1,7 +1,9 @@
 {% load tagfilters %}
+{% if tags %}
 <div id="tagsList">
     <h3>Tags</h3>
     {% for tag in tags %}
         <a href="{% url tag tag.name %}" class="tag" style="font-size: {{ tag.count|fontsize:tagMax }}">{{ tag.name }}</a>
     {% endfor %}
 </div>
+{% endif %}
