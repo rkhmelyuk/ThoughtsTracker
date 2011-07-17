@@ -7,7 +7,6 @@ from django.conf import settings
 from thought import *
 from tag import *
 
-
 def index(request):
     tags = TagManager().getTags()
     tagMax = tags and max([tag.count for tag in tags]) or 0
