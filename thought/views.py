@@ -104,21 +104,23 @@ def tagPage(request, tag, page):
     })
 
 
-def removeEmptyTag(tags):
-    try:
-        tags.remove("")
-    except ValueError:
-        pass
-
-
-def parseTags(tagsText):
-    tags = [tag.strip().lower() for tag in tagsText.split(",")]
-    return tags
-
-
 def getTagsList(tagsText):
     tags = parseTags(tagsText)
     removeEmptyTag(tags)
     tags.sort()
 
     return tags
+
+
+def parseTags(tagsText):
+    tags = [tag.strip().lower() for tag in tagsText.split(",")]
+    return prepareTags(tags)
+
+def prepareTags(tags):
+    return [tag.lower().replace("/", "") for tag in tags]
+
+def removeEmptyTag(tags):
+    try:
+        tags.remove("")
+    except ValueError:
+        pass
