@@ -12,6 +12,8 @@
 {% block content %}
     <h1>Post a Thought</h1>
 
+    {% include 'thought/error.html' %}
+
     <form id="postForm" action="{% url post %}" method="POST">
         {% csrf_token %}
         <p><label for="text">Thought:</label></p>

@@ -12,6 +12,8 @@
 {% block content %}
     <h1>Edit a Thought</h1>
 
+    {% include 'thought/error.html' %}
+
     <form id="saveForm" action="{% url edit thought.id %}" method="POST">
         {% csrf_token %}
         <p><label for="text">Thought:</label></p>

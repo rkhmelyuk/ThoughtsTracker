@@ -34,20 +34,26 @@ def latestPage(request, page):
 
 
 def post(request):
+    error = None
     thought = Thought()
 
     if request.method == 'POST':
         thought.text = request.POST.get('text')
-        thought.date = datetime.now()
-        thought.tags = getTagsList(request.POST.get('tags'))
-        ThoughtManager().create(thought)
 
-        return redirect('index')
+        if thought.text:
+            thought.date = datetime.now()
+            thought.tags = getTagsList(request.POST.get('tags'))
+            ThoughtManager().create(thought)
 
-    return render(request, "thought/post.html", {'thought': thought})
+            return redirect('index')
+        else:
+            error = "Thought shouldn't be empty, otherwise who may need it?"
+
+    return render(request, "thought/post.html", {'thought': thought, 'error': error})
 
 
 def edit(request, id):
+    error = None
     thought = ThoughtManager().get(id)
 
     if thought is None:
@@ -55,13 +61,16 @@ def edit(request, id):
 
     if request.method == 'POST':
         thought.text = request.POST.get('text')
-        thought.tags = getTagsList(request.POST.get('tags'))
-        ThoughtManager().save(thought)
+        if thought.text:
+            thought.tags = getTagsList(request.POST.get('tags'))
+            ThoughtManager().save(thought)
 
-        return redirect('index')
+            return redirect('index')
+        else:
+            error = "Thought shouldn't be empty, otherwise who may need it?"
 
     tags = (thought.get_tags() and ", ".join(thought.get_tags()) or "")
-    return render(request, "thought/edit.html", {'thought': thought, 'tags': tags})
+    return render(request, "thought/edit.html", {'thought': thought, 'tags': tags, 'error': error})
 
 
 def thought(request, id):

@@ -75,3 +75,5 @@ h2, h3, h4, h5, h6 { color: #2f2f2f; text-shadow: #d0d0d0 1px 1px; }
 
 .buttons { text-align: right; }
 .buttons a { margin: 3px 0 3px 5px; }
+
+.error { font-size: 1.2em; color: #cc0000; font-weight: 400; padding: 10px 0;}
