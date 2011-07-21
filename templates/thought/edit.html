@@ -15,7 +15,7 @@
     <form id="saveForm" action="{% url edit thought.id %}" method="POST">
         {% csrf_token %}
         <p><label for="text">Thought:</label></p>
-        <textarea rows="" cols="" name="text" id="text">{{ thought.text|striptags }}</textarea>
+        <textarea rows="" cols="" name="text" id="text">{{ thought.text|safe }}</textarea>
         <br/>
         <p><label for="tags">Tags:</label></p>
         <input type="text" id="tags" name="tags" value="{{ tags }}"/>

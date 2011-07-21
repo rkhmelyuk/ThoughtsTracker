@@ -2,7 +2,7 @@
 <div id="thoughtsList">
     {% for thought in thoughts %}
         <div class="thought {% if forloop.first %}first{% endif %}">
-            <div class="text markup"> {{ thought.text|striptags|markdown }} </div>
+            <div class="text markup"> {{ thought.text|force_escape|markdown|safe|urlize }} </div>
             {% if thought.tags %}
                 <div class="tags">
                     <strong>Tags:</strong>

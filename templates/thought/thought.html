@@ -5,6 +5,6 @@
 {% load markup %}
 {% block content %}
     <div id="thoughtText" class="markup">
-        {{ thought.text|striptags|markdown }}
+        {{ thought.text|safe|markdown }}
     </div>
 {% endblock %}
