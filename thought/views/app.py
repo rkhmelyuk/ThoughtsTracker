@@ -4,13 +4,13 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import HttpResponseRedirect
 from django.conf import settings
-from thought import *
-from tag import *
+from thought.thought import *
+from thought.dicontainer import CONTAINER
 
 def index(request):
-    tags = TagManager().getTags()
+    tags = CONTAINER.getTagManager().getTags()
     tagMax = tags and max([tag.count for tag in tags]) or 0
-    thoughts = ThoughtManager().latest(settings.THOUGHTS_PER_PAGE)
+    thoughts = CONTAINER.getThoughtManager().latest(settings.THOUGHTS_PER_PAGE)
     showMore = len(thoughts) == settings.THOUGHTS_PER_PAGE
     loadMoreUrl = reverse("latestPage", args=[1])
 
@@ -21,7 +21,7 @@ def index(request):
 
 def latestPage(request, page):
     page = int(page)
-    thoughts = ThoughtManager().latest(
+    thoughts = CONTAINER.getThoughtManager().latest(
         settings.THOUGHTS_PER_PAGE,
         skip=page * settings.THOUGHTS_PER_PAGE)
     showMore = len(thoughts) == settings.THOUGHTS_PER_PAGE
@@ -43,7 +43,7 @@ def post(request):
         if thought.text:
             thought.date = datetime.now()
             thought.tags = getTagsList(request.POST.get('tags'))
-            ThoughtManager().create(thought)
+            CONTAINER.getThoughtManager().create(thought)
 
             return redirect('index')
         else:
@@ -54,7 +54,7 @@ def post(request):
 
 def edit(request, id):
     error = None
-    thought = ThoughtManager().get(id)
+    thought = CONTAINER.getThoughtManager().get(id)
 
     if thought is None:
         raise Http404()
@@ -63,7 +63,7 @@ def edit(request, id):
         thought.text = request.POST.get('text')
         if thought.text:
             thought.tags = getTagsList(request.POST.get('tags'))
-            ThoughtManager().save(thought)
+            CONTAINER.getThoughtManager().save(thought)
 
             return redirect('index')
         else:
@@ -74,19 +74,19 @@ def edit(request, id):
 
 
 def thought(request, id):
-    thought = ThoughtManager().get(id)
+    thought = CONTAINER.getThoughtManager().get(id)
     return render(request, "thought/thought.html", {'thought': thought})
 
 
 def remove(request, id):
-    ThoughtManager().deleteById(id)
+    CONTAINER.getThoughtManager().deleteById(id)
     return HttpResponseRedirect(reverse('index'))
 
 
 def tag(request, tag):
-    tags = TagManager().getTags()
+    tags = CONTAINER.getTagManager().getTags()
     tagMax = tags and max([each.count for each in tags]) or 0
-    thoughts = ThoughtManager().searchByTag(tag, settings.THOUGHTS_PER_PAGE)
+    thoughts = CONTAINER.getThoughtManager().searchByTag(tag, settings.THOUGHTS_PER_PAGE)
     showMore = len(thoughts) == settings.THOUGHTS_PER_PAGE
     loadMoreUrl = reverse("tagPage", args=[tag, 1])
 
@@ -99,7 +99,7 @@ def tag(request, tag):
 
 def tagPage(request, tag, page):
     page = int(page)
-    thoughts = ThoughtManager().searchByTag(
+    thoughts = CONTAINER.getThoughtManager().searchByTag(
         tag, settings.THOUGHTS_PER_PAGE,
         skip=page * settings.THOUGHTS_PER_PAGE)
 
@@ -111,6 +111,9 @@ def tagPage(request, tag, page):
         'showMore': showMore,
         'loadMoreUrl': loadMoreUrl
     })
+
+def appSettings(request):
+    return render(request, "thought/settings.html")
 
 
 def getTagsList(tagsText):

@@ -1,5 +1,3 @@
-
-from pymongo import Connection
 from pymongo import ASCENDING
 
 class Tag:
@@ -7,9 +5,10 @@ class Tag:
     The tag information: name and count
     """
 
-    def __init__(self, name=None, count=None):
+    def __init__(self, name=None, count=None, color=None):
         self.name = name
         self.count = count
+        self.color = color
 
 
 class TagManager:
@@ -19,14 +18,22 @@ class TagManager:
     while also have another attribute - 'count' - usage count of tag.
     """
 
-    def __init__(self):
-        self.db = Connection().thoughts
+    def __init__(self, mongoConnection):
+        self.db = mongoConnection.getDatabase()
         self.db.tags.ensure_index("count")
+
+    def searchTags(self, keyword, limit=10):
+        """ Search tag that equal or starts with specified keyword """
+        keywordReg = '^' + keyword.lower() + '.*$'
+        cursor = self.db.tags.find({'_id': {'$regex': keywordReg}}).limit(limit)
+        return [self._readTag(doc) for doc in cursor]
 
     def pushTags(self, tags):
         """ Increment tags usage count """
         if tags: [self._incrementTagUsageCount(tag) for tag in tags if tag]
 
+    def setTagColor(self, tag, color):
+        self.db.tags.update({"_id": tag}, {"$set": {"color": color}}, upsert=True)
 
     def removeTags(self, tags):
         """ Decrement tags usage count """
@@ -49,4 +56,7 @@ class TagManager:
         return [self._readTag(doc) for doc in cursor]
 
     def _readTag(self, found):
-        return Tag(found.get('_id'), found.get('count'))
+        return Tag(
+            found.get('_id'),
+            found.get('count'), 
+            found.get('color'))

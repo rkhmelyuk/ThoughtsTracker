@@ -15,6 +15,10 @@ var Thoughts = {
                 }
             );
         });
+    },
+
+    settings: function() {
+        
     }
 
 };

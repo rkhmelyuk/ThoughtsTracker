@@ -1,0 +1,36 @@
+{% extends "thought/main_layout.html" %}
+
+{% block title %}Application Settings{% endblock %}
+
+{% block head %}
+    <script type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>Application Settings</h1>
+
+    <a href="{% url index %}">Back</a>
+
+    <div class="clear"></div>
+
+    <h3>Colorize Tags</h3>
+
+    <div class="colorizeTag">
+        <input type="text" name="tag" value="" class=""/>
+
+        <div class="colors">
+            <div class="title">Colors:</div>
+            <div class="color yellow"></div>
+            <div class="color lightYellow"></div>
+            <div class="color red"></div>
+            <div class="color lightRed"></div>
+            <div class="color blue"></div>
+            <div class="color lightBlue"></div>
+            <div class="color green"></div>
+            <div class="color lightGreen"></div>
+            <div class="color gray"></div>
+            <div class="color lightGray"></div>
+        </div>
+    </div>
+
+{% endblock %}

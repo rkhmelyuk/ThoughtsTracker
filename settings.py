@@ -147,3 +147,7 @@ LOGGING = {
 # -------------------------------------------- Project settings
 
 THOUGHTS_PER_PAGE = 10
+
+MONGODB_HOST = '127.0.0.1'
+MONGODB_PORT = 27017
+MONGODB_DATABASE = 'thoughts'

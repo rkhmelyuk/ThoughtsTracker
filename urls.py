@@ -4,8 +4,7 @@ from django.conf.urls.defaults import patterns, include, url
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('thought.views',
-    # Examples:
+urlpatterns = patterns('thought.views.app',
     url(r'^$', 'index', name = 'index'),
     url(r'^post/$', 'post', name = 'post'),
     url(r'^edit/(?P<id>\w+)$', 'edit', name = 'edit'),
@@ -15,9 +14,9 @@ urlpatterns = patterns('thought.views',
     url(r'^_internal/latestThoughtsPage/(?P<page>\d+)$', 'latestPage', name = 'latestPage'),
     url(r'^_internal/tagThoughtsPage/(?P<tag>[^/]+)/(?P<page>\d+)$', 'tagPage', name = 'tagPage'),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^settings/$', 'appSettings', name = 'settings'),
+)
 
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+urlpatterns += patterns('thought.views.api',
+    url(r'^api/searchTags/(?P<keyword>[^/]+)$', 'searchTags', name = 'searchTags'),
 )

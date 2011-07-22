@@ -3,7 +3,6 @@ from datetime import datetime
 from django.db.models import permalink
 from pymongo.errors import OperationFailure
 from pymongo import DESCENDING
-from tag import *
 
 class Thought:
     def __init__(self, id=None, text=None, date=None, tags=None):
@@ -39,9 +38,9 @@ class Thought:
         
 
 class ThoughtManager:
-    def __init__(self):
-        self.db = Connection().thoughts
-        self.tagManager = TagManager()
+    def __init__(self, mongoConnection, tagManager):
+        self.db = mongoConnection.getDatabase()
+        self.tagManager = tagManager
 
     def create(self, thought):
         id = self.db.thoughts.insert({
@@ -54,6 +53,9 @@ class ThoughtManager:
         self.tagManager.pushTags(thought.get_tags())
 
     def save(self, thought):
+        """
+        
+        """
         existing_thought = self.get(thought.get_id())
         if existing_thought and existing_thought.get_tags():
             thoughtTagsSet = set(thought.get_tags())
@@ -73,8 +75,10 @@ class ThoughtManager:
             }
         }, upsert=True)
 
-        addTags and self.tagManager.pushTags(addTags)
-        removeTags and self.tagManager.removeTags(removeTags)
+        if addTags:
+            self.tagManager.pushTags(addTags)
+        if removeTags:
+            self.tagManager.removeTags(removeTags)
 
     def deleteById(self, id):
         try:
