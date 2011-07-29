@@ -38,9 +38,10 @@ class Thought:
         
 
 class ThoughtManager:
-    def __init__(self, mongoConnection, tagManager):
+    def __init__(self, mongoConnection, tagManager, study):
         self.db = mongoConnection.getDatabase()
         self.tagManager = tagManager
+        self.study = study
 
     def create(self, thought):
         id = self.db.thoughts.insert({
@@ -51,11 +52,9 @@ class ThoughtManager:
 
         thought.set_id(id)
         self.tagManager.pushTags(thought.get_tags())
+        self.study.learn(thought.get_tags(), thought.get_text())
 
     def save(self, thought):
-        """
-        
-        """
         existing_thought = self.get(thought.get_id())
         if existing_thought and existing_thought.get_tags():
             thoughtTagsSet = set(thought.get_tags())
@@ -79,6 +78,13 @@ class ThoughtManager:
             self.tagManager.pushTags(addTags)
         if removeTags:
             self.tagManager.removeTags(removeTags)
+
+        if existing_thought:
+            self.study.forget(
+                existing_thought.get_tags(),
+                existing_thought.get_text())
+
+        self.study.learn(thought.get_tags(), thought.get_text())
 
     def deleteById(self, id):
         try:

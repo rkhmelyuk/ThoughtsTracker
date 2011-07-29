@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     'thoughts.thought',
+    'thoughts.tagdetector',
 )
 
 # A sample logging configuration. The only tangible logging

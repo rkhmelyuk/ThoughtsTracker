@@ -19,4 +19,5 @@ urlpatterns = patterns('thought.views.app',
 
 urlpatterns += patterns('thought.views.api',
     url(r'^api/searchTags/(?P<keyword>[^/]+)$', 'searchTags', name = 'searchTags'),
+    url(r'^api/detectTags$', 'detectTags', name = 'detectTags'),
 )

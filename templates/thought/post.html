@@ -27,4 +27,9 @@
             <a href="javascript:void(0);" onclick="$('#postForm').submit()">Post</a>
         </div>
     </form>
+
+    <form id="tagsDetectionForm" method="POST" action="{% url detectTags %}">
+        {% csrf_token %}
+        <input type="hidden" value="" id="text" name="text"/>
+    </form>
 {% endblock %}

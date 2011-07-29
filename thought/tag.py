@@ -55,6 +55,9 @@ class TagManager:
         cursor = self.db.tags.find().sort("_id", ASCENDING)
         return [self._readTag(doc) for doc in cursor]
 
+    def tagsCount(self):
+        return self.db.tags.count()
+
     def _readTag(self, found):
         return Tag(
             found.get('_id'),
