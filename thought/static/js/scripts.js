@@ -11,7 +11,6 @@ var Thoughts = {
             }
             changeTimeout = setTimeout(function() {
                 var text = $("#text").val();
-                // TODO - use websocket
                 $('#tagsDetectionForm #text').val(text);
                 $('#tagsDetectionForm').ajaxSubmit({
                     success: function(response) {
