@@ -1,19 +1,31 @@
 var Thoughts = {
 
+    createThought: function() {
+        $('textarea').autoResize();
+        $('textarea').focus();
+
+        var changeTimeout = null;
+        $('#text').keyup(function() {
+            if (changeTimeout) {
+                clearTimeout(changeTimeout);
+            }
+            changeTimeout = setTimeout(function() {
+                var text = $("#text").val();
+                // TODO - use websocket
+                $('#tagsDetectionForm #text').val(text);
+                $('#tagsDetectionForm').ajaxSubmit({
+                    success: function(response) {
+                        console.log(response);
+                        $('#tags').val(response);
+                    }
+                })
+            }, 500)
+        })
+    },
+
     editThought: function() {
         $('textarea').autoResize();
         $('textarea').focus();
-        $('#text').change(function() {
-            var text = $(this).val();
-            // TODO - use websocket
-            $('#tagsDetectionForm #text').val(text);
-            $('#tagsDetectionForm').ajaxSubmit({
-                success: function(response) {
-                    console.log(response);
-                    $('#tags').val(response);
-                }
-            })
-        })
     },
 
     loadThoughtsPage: function(button) {
