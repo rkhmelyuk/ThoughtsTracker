@@ -92,6 +92,7 @@ class ThoughtManager:
             if thought is not None:
                 self.db.thoughts.remove(ObjectId(id), safe=True)
                 self.tagManager.removeTags(thought.get_tags())
+                self.study.forget(thought.get_tags(), thought.get_text())
                 return True
         except OperationFailure:
             print "Error to remove thought by id " + id
